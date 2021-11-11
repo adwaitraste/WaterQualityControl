@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'reactstrap';
+import { Container, Table } from 'reactstrap';
 
 const FieldTable = (props) => {
 
@@ -7,7 +7,7 @@ const FieldTable = (props) => {
     const [jsonData, setJsonData] = useState([]);
 
     const getData = (field) => {
-        fetch("https://api.thingspeak.com/channels/1543836/fields/" + field + ".json?api_key=37WFEHRP9JD2266M&results=3", {
+        fetch("https://api.thingspeak.com/channels/1543836/fields/" + field + ".json?api_key=37WFEHRP9JD2266M&results=120", {
             method: 'GET',
         })
             .then(res => res.json())
@@ -41,39 +41,41 @@ const FieldTable = (props) => {
     }, [])
 
     return (
-        <Table
-            bordered
-            dark
-            hover
-            responsive
-            size=""
-            striped
-        >
-            <thead>
-                <tr>
-                    <th>
-                        Time
-                    </th>
-                    <th>
-                        {props.name}
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    jsonData.map(e => {
-                        return <tr>
-                                    <td>
-                                        {e["created_at"]}
-                                    </td>
-                                    <td>
-                                        {e["field"+fieldID]}
-                                    </td>
-                                </tr>
-                    })
-                }
-            </tbody>
-        </Table>
+        <Container>
+            <Table
+                bordered
+                dark
+                hover
+                responsive
+                size=""
+                striped
+            >
+                <thead>
+                    <tr>
+                        <th>
+                            Time
+                        </th>
+                        <th>
+                            {props.name}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        jsonData.map(e => {
+                            return <tr>
+                                <td>
+                                    {e["created_at"]}
+                                </td>
+                                <td>
+                                    {e["field" + fieldID]}
+                                </td>
+                            </tr>
+                        })
+                    }
+                </tbody>
+            </Table>
+        </Container>
     );
 }
 
